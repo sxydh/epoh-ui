@@ -43,8 +43,8 @@ namespace EpohUI.Core
                 return false;
             }
             var apiUri = context.Request.Url.AbsolutePath.TrimStart(flag.ToCharArray());
-            var methodId = DllHelper.GetMethodId(apiUri);
-            var result = DllHelper.Invoke(methodId, new object[] { });
+            var methodId = MethodHelper.GetMethodId(apiUri);
+            var result = MethodHelper.Invoke(methodId, new object[] { });
             using (StreamWriter streamWriter = new StreamWriter(context.Response.OutputStream))
             {
                 streamWriter.WriteLine(result.ToString());
@@ -57,7 +57,7 @@ namespace EpohUI.Core
 
     }
 
-    class DllHelper
+    class MethodHelper
     {
 
         private static readonly object _lock = new object();
@@ -65,7 +65,7 @@ namespace EpohUI.Core
         private static readonly Dictionary<string, Type> _typeCache = new Dictionary<string, Type>();
         private static readonly ConcurrentDictionary<string, MethodInfo> _methodCache = new ConcurrentDictionary<string, MethodInfo>();
 
-        static DllHelper()
+        static MethodHelper()
         {
             lock (_lock)
             {
