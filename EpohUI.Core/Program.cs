@@ -43,7 +43,7 @@ namespace EpohUI.Core
                 return false;
             }
             var apiUri = context.Request.Url.AbsolutePath.TrimStart(flag.ToCharArray());
-            var methodId = MethodHelper.GetMethodId(apiUri);
+            MethodHelper.GetMethodId(apiUri, out var methodId);
             var result = MethodHelper.Invoke(methodId, new object[] { });
             using (StreamWriter streamWriter = new StreamWriter(context.Response.OutputStream))
             {
@@ -61,6 +61,7 @@ namespace EpohUI.Core
     {
 
         private static readonly object _lock = new object();
+        private static readonly Dictionary<string, string> _uri2methodId = new Dictionary<string, string>();
         private static readonly Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();
         private static readonly Dictionary<string, Type> _typeCache = new Dictionary<string, Type>();
         private static readonly ConcurrentDictionary<string, MethodInfo> _methodCache = new ConcurrentDictionary<string, MethodInfo>();
@@ -103,9 +104,9 @@ namespace EpohUI.Core
             }
         }
 
-        public static string GetMethodId(string _)
+        public static void GetMethodId(string uri, out string methodId)
         {
-            return "TODO";
+            _uri2methodId.TryGetValue(uri, out methodId);
         }
 
         public static object Invoke(string methodId, params object[] args)
