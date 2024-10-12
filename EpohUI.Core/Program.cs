@@ -61,7 +61,7 @@ namespace EpohUI.Core
     {
 
         private static readonly object _lock = new object();
-        private static readonly Dictionary<string, string> _uri2methodId = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> _methodIdMap = new Dictionary<string, string>();
         private static readonly Dictionary<string, Assembly> _assemblyCache = new Dictionary<string, Assembly>();
         private static readonly Dictionary<string, Type> _typeCache = new Dictionary<string, Type>();
         private static readonly ConcurrentDictionary<string, MethodInfo> _methodCache = new ConcurrentDictionary<string, MethodInfo>();
@@ -72,6 +72,7 @@ namespace EpohUI.Core
             {
                 LoadAssembly();
                 LoadMethod();
+                LoadMethodIdMap();
             }
         }
 
@@ -104,9 +105,14 @@ namespace EpohUI.Core
             }
         }
 
+        private static void LoadMethodIdMap()
+        {
+
+        }
+
         public static void GetMethodId(string uri, out string methodId)
         {
-            _uri2methodId.TryGetValue(uri, out methodId);
+            _methodIdMap.TryGetValue(uri, out methodId);
         }
 
         public static object Invoke(string methodId, params object[] args)
