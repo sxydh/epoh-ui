@@ -28,18 +28,21 @@ namespace EpohUI.Core
 
         public override void ProcessRequest(HttpListenerContext context)
         {
-            var url = context.Request.Url;
-            if (url.AbsolutePath.Contains("/api/"))
+            if (ProcessApi(context))
             {
-                ProcessApi(context);
                 return;
             }
             base.ProcessRequest(context);
         }
 
-        private void ProcessApi(HttpListenerContext context)
+        private bool ProcessApi(HttpListenerContext context)
         {
-            var apiUri = context.Request.Url.AbsolutePath.TrimStart("/api/".ToCharArray());
+            var flag = "/api/";
+            if (!context.Request.Url.AbsolutePath.StartsWith(flag))
+            {
+                return false;
+            }
+            var apiUri = context.Request.Url.AbsolutePath.TrimStart(flag.ToCharArray());
             var methodId = DllHelper.GetMethodId(apiUri);
             var result = DllHelper.Invoke(methodId, new object[] { });
             using (StreamWriter streamWriter = new StreamWriter(context.Response.OutputStream))
@@ -49,6 +52,7 @@ namespace EpohUI.Core
                 context.Response.StatusCode = 200;
             }
             context.Response.Close();
+            return true;
         }
 
     }
