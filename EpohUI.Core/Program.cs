@@ -40,7 +40,15 @@ namespace EpohUI.Core
         private void ProcessApi(HttpListenerContext context)
         {
             var apiUri = context.Request.Url.AbsolutePath.TrimStart("/api/".ToCharArray());
-
+            var methodId = DllHelper.GetMethodId(apiUri);
+            var result = DllHelper.Invoke(methodId, new object[] { });
+            using (StreamWriter streamWriter = new StreamWriter(context.Response.OutputStream))
+            {
+                streamWriter.WriteLine(result.ToString());
+                context.Response.ContentType = "text/plain; charset=UTF-8";
+                context.Response.StatusCode = 200;
+            }
+            context.Response.Close();
         }
 
     }
@@ -89,6 +97,11 @@ namespace EpohUI.Core
                     _typeCache[type.FullName] = type;
                 }
             }
+        }
+
+        public static string GetMethodId(string _)
+        {
+            return "TODO";
         }
 
         public static object Invoke(string methodId, params object[] args)
