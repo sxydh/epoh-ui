@@ -107,7 +107,29 @@ namespace EpohUI.Core
 
         private static void LoadMethodIdMap()
         {
-
+            foreach (var type in _typeCache.Values)
+            {
+                var method = type.GetMethod("LoadMethodIdMap");
+                if (method == null || !method.IsStatic)
+                {
+                    continue;
+                }
+                object ret = method.Invoke(null, new object[0]);
+                if (ret == null)
+                {
+                    continue;
+                }
+                var lines = ret.ToString().Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                foreach (var line in lines)
+                {
+                    if (string.IsNullOrEmpty(line))
+                    {
+                        continue;
+                    }
+                    var kv = line.Split('=');
+                    _methodIdMap[kv[0].Trim()] = kv[1].Trim();
+                }
+            }
         }
 
         public static void GetMethodId(string uri, out string methodId)
@@ -134,15 +156,8 @@ namespace EpohUI.Core
                         {
                             throw new ArgumentException($"Type did not exist: {typeName}");
                         }
-                        try
-                        {
-                            method = type.GetMethod(methodName);
-                        }
-                        catch
-                        {
-                            throw new ArgumentException($"Method did not exist: {methodId}");
-                        }
-                        _methodCache[methodId] = method;
+                        method = type.GetMethod(methodName);
+                        _methodCache[methodId] = method ?? throw new ArgumentException($"Method did not exist: {methodId}");
                     }
                 }
             }
