@@ -9,10 +9,19 @@ namespace EpohUI.Test.CoreTest
     {
 
         [TestMethod]
-        public void InitTest()
+        public void GetMethodIdTest()
         {
-            MethodHelper.GetMethodId("", out var methodId);
+            MethodHelper.GetMethodId("say-hello", out var methodId);
             Assert.IsNotNull(methodId);
+        }
+
+        [TestMethod]
+        public void InvokeTest()
+        {
+            MethodHelper.GetMethodId("say-hello", out var methodId);
+            Assert.IsNotNull(methodId);
+            var ret = MethodHelper.Invoke(methodId, "Jack");
+            Assert.IsNotNull(ret);
         }
 
     }
