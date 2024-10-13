@@ -66,8 +66,16 @@ namespace EpohUI.Core
 
                 if (methodId != null)
                 {
-                    var result = MethodHelper.Invoke(methodId, invokeParams);
-                    streamWriter.WriteLine(result.ToString());
+                    object result;
+                    try
+                    {
+                        result = MethodHelper.Invoke(methodId, invokeParams);
+                    }
+                    catch (Exception ex)
+                    {
+                        result = ex.ToString();
+                    }
+                    streamWriter.WriteLine(result);
                     response.ContentType = "text/plain; charset=UTF-8";
                     response.StatusCode = 200;
                 }

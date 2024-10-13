@@ -10,7 +10,7 @@ namespace EpohUI.Lib
     public class SQLiteHelper
     {
 
-        public static string Select(string reqBody)
+        public static string Execute(string reqBody)
         {
             var req = JsonConvert.DeserializeObject<Dictionary<string, object>>(reqBody);
             req.TryGetValue("sql", out var sql);
