@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 
@@ -17,7 +18,7 @@ namespace EpohUI.Lib
 
             var connString = new SqliteConnectionStringBuilder()
             {
-                Mode = SqliteOpenMode.ReadOnly,
+                Mode = SqliteOpenMode.ReadWriteCreate,
                 DataSource = Path.Combine(Directory.GetCurrentDirectory(), file.ToString())
             }.ToString();
 
@@ -28,9 +29,11 @@ namespace EpohUI.Lib
                 {
                     if (args != null)
                     {
-                        foreach (var arg in (object[])args)
+                        var jarray = (JArray)args;
+                        for (var i = 0; i < jarray.Count; i++)
                         {
-                            command.Parameters.Add(arg);
+                            var jvalue = (JValue)jarray[i];
+                            command.Parameters.AddWithValue($"#{i}", jvalue.Value);
                         }
                     }
                     var list = new List<Dictionary<string, object>>();
