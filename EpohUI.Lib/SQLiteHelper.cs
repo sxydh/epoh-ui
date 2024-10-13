@@ -55,7 +55,7 @@ namespace EpohUI.Lib
 
         public static string GetMethodIdMap()
         {
-            return $"lib/sqlite-select={typeof(SQLiteHelper).FullName}#Select";
+            return $"lib/sqlite-execute={typeof(SQLiteHelper).FullName}#Execute";
         }
 
     }
