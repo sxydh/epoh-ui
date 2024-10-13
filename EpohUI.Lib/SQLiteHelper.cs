@@ -1,20 +1,51 @@
-﻿namespace EpohUI.Lib
+﻿using Microsoft.Data.Sqlite;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.IO;
+
+namespace EpohUI.Lib
 {
     public class SQLiteHelper
     {
 
-        public static string select(string reqBody)
+        public static string Select(string reqBody)
         {
-            string connectionString = "Data Source=yourdatabase.db;Version=3;";
-            using (var connection = new SQLiteConnection(connectionString))
+            var req = JsonConvert.DeserializeObject<Dictionary<string, object>>(reqBody);
+            req.TryGetValue("sql", out var sql);
+            req.TryGetValue("args", out var args);
+            req.TryGetValue("file", out var file);
+
+            var connString = new SqliteConnectionStringBuilder()
             {
-                connection.Open();
-                string sql = "INSERT INTO your_table (column1, column2) VALUES (@value1, @value2)";
-                using (var command = new SQLiteCommand(sql, connection))
+                Mode = SqliteOpenMode.ReadOnly,
+                DataSource = Path.Combine(Directory.GetCurrentDirectory(), file.ToString())
+            }.ToString();
+
+            using (var conn = new SqliteConnection(connString))
+            {
+                conn.Open();
+                using (var command = new SqliteCommand(sql.ToString(), conn))
                 {
-                    command.Parameters.AddWithValue("@value1", "data1");
-                    command.Parameters.AddWithValue("@value2", "data2");
-                    command.ExecuteNonQuery();
+                    if (args != null)
+                    {
+                        foreach (var arg in (object[])args)
+                        {
+                            command.Parameters.Add(arg);
+                        }
+                    }
+                    var list = new List<Dictionary<string, object>>();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var ele = new Dictionary<string, object>();
+                        for (var i = 0; i < reader.FieldCount; i++)
+                        {
+                            ele[reader.GetName(i)] = reader.GetValue(i);
+                        }
+                        list.Add(ele);
+                    }
+                    return JsonConvert.SerializeObject(list);
                 }
             }
         }
