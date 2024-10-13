@@ -10,7 +10,7 @@
 
         public static string GetMethodIdMap()
         {
-            return $"hello-world={typeof(HelloWorld).FullName}#SayHello";
+            return $"lib/hello-world={typeof(HelloWorld).FullName}#SayHello";
         }
 
     }
