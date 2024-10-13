@@ -5,6 +5,10 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpohUI.Core", "EpohUI.Core\EpohUI.Core.csproj", "{B9A12DD0-F926-4E39-8F4F-D15981E564B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpohUI.Lib", "EpohUI.Lib\EpohUI.Lib.csproj", "{A9EFAFF5-E92F-4F03-94DF-89BE3E636882}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpohUI.Test", "EpohUI.Test\EpohUI.Test.csproj", "{6AB6B26F-40FF-4818-AC72-74CE0EE9A2E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{B9A12DD0-F926-4E39-8F4F-D15981E564B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9A12DD0-F926-4E39-8F4F-D15981E564B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9A12DD0-F926-4E39-8F4F-D15981E564B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9EFAFF5-E92F-4F03-94DF-89BE3E636882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9EFAFF5-E92F-4F03-94DF-89BE3E636882}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9EFAFF5-E92F-4F03-94DF-89BE3E636882}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9EFAFF5-E92F-4F03-94DF-89BE3E636882}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AB6B26F-40FF-4818-AC72-74CE0EE9A2E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AB6B26F-40FF-4818-AC72-74CE0EE9A2E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AB6B26F-40FF-4818-AC72-74CE0EE9A2E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AB6B26F-40FF-4818-AC72-74CE0EE9A2E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
