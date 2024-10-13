@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CoreTest\MethodHelperTest.cs" />
     <Compile Include="LibTest\HelloWorldTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EpohUI.Core\EpohUI.Core.csproj">
+      <Project>{b9a12dd0-f926-4e39-8f4f-d15981e564b8}</Project>
+      <Name>EpohUI.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EpohUI.Lib\EpohUI.Lib.csproj">
       <Project>{a9efaff5-e92f-4f03-94df-89be3e636882}</Project>
       <Name>EpohUI.Lib</Name>

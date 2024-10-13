@@ -57,7 +57,7 @@ namespace EpohUI.Core
 
     }
 
-    class MethodHelper
+    public class MethodHelper
     {
 
         private static readonly object _lock = new object();
