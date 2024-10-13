@@ -44,12 +44,12 @@ namespace EpohUI.Core
             var queryString = request.QueryString;
             var path = url.AbsolutePath;
             path = HttpUtility.UrlDecode(path);
-            var flag = "/api/";
-            if (!path.StartsWith(flag))
+            var apiPrefix = "/api/";
+            if (!path.StartsWith(apiPrefix))
             {
                 return false;
             }
-            var apiUri = path.TrimStart(flag.ToCharArray());
+            var apiUri = path.TrimStart(apiPrefix.ToCharArray());
             apiUri = apiUri.Trim('/');
 
             var invokeParams = queryString["invokeParams"];
