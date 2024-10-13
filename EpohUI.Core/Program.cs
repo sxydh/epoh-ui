@@ -109,7 +109,7 @@ namespace EpohUI.Core
         {
             foreach (var type in _typeCache.Values)
             {
-                var method = type.GetMethod("LoadMethodIdMap");
+                var method = type.GetMethod("GetMethodIdMap");
                 if (method == null || !method.IsStatic)
                 {
                     continue;
