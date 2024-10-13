@@ -15,7 +15,7 @@ namespace EpohUI.Test.LibTest
         {
             var req = new Dictionary<string, object>
             {
-                ["sql"] = "select #0 as i, #1 as s, #2 as n",
+                ["sql"] = "select #p1 as i, #p2 as s, #p3 as n",
                 ["args"] = new object[] { 1, "1", null },
                 ["file"] = $"{typeof(SQLiteHelperTest).FullName}.sqlite"
             };

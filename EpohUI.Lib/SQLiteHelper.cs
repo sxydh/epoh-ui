@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -33,7 +34,7 @@ namespace EpohUI.Lib
                         for (var i = 0; i < jarray.Count; i++)
                         {
                             var jvalue = (JValue)jarray[i];
-                            command.Parameters.AddWithValue($"#{i}", jvalue.Value);
+                            command.Parameters.AddWithValue($"#p{i + 1}", jvalue.Value ?? DBNull.Value);
                         }
                     }
                     var list = new List<Dictionary<string, object>>();
