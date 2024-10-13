@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Web;
 
 namespace EpohUI.Core
@@ -41,7 +42,6 @@ namespace EpohUI.Core
             var request = context.Request;
             var response = context.Response;
             var url = request.Url;
-            var queryString = request.QueryString;
             var path = url.AbsolutePath;
             path = HttpUtility.UrlDecode(path);
             var apiPrefix = "/api/";
@@ -49,6 +49,8 @@ namespace EpohUI.Core
             {
                 return false;
             }
+            var queryString = HttpUtility.ParseQueryString(url.Query, Encoding.UTF8);
+
             var apiUri = path.TrimStart(apiPrefix.ToCharArray());
             apiUri = apiUri.Trim('/');
 
