@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreTest\MethodHelperTest.cs" />
+    <Compile Include="CoreTest\ProgramTest.cs" />
     <Compile Include="LibTest\HelloWorldTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

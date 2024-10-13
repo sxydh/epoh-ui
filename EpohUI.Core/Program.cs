@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Web;
 
 namespace EpohUI.Core
 {
@@ -37,21 +38,35 @@ namespace EpohUI.Core
 
         private bool ProcessApi(HttpListenerContext context)
         {
+            var request = context.Request;
+            var response = context.Response;
+            var url = request.Url;
+            var queryString = request.QueryString;
+            var path = url.AbsolutePath;
+            path = HttpUtility.UrlDecode(path);
             var flag = "/api/";
-            if (!context.Request.Url.AbsolutePath.StartsWith(flag))
+            if (!path.StartsWith(flag))
             {
                 return false;
             }
-            var apiUri = context.Request.Url.AbsolutePath.TrimStart(flag.ToCharArray());
+            var apiUri = path.TrimStart(flag.ToCharArray());
+            apiUri = apiUri.Trim('/');
+
+            var invokeParams = queryString["invokeParams"];
+            using (var reader = new StreamReader(request.InputStream, request.ContentEncoding))
+            {
+                invokeParams += reader.ReadToEnd();
+            }
+
             MethodHelper.GetMethodId(apiUri, out var methodId);
-            var result = MethodHelper.Invoke(methodId, new object[] { });
-            using (StreamWriter streamWriter = new StreamWriter(context.Response.OutputStream))
+            var result = MethodHelper.Invoke(methodId, invokeParams);
+            using (StreamWriter streamWriter = new StreamWriter(response.OutputStream))
             {
                 streamWriter.WriteLine(result.ToString());
-                context.Response.ContentType = "text/plain; charset=UTF-8";
-                context.Response.StatusCode = 200;
+                response.ContentType = "text/plain; charset=UTF-8";
+                response.StatusCode = 200;
             }
-            context.Response.Close();
+            response.Close();
             return true;
         }
 
