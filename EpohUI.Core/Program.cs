@@ -71,7 +71,7 @@ namespace EpohUI.Core
             lock (_lock)
             {
                 LoadAssembly();
-                LoadMethod();
+                LoadType();
                 LoadMethodIdMap();
             }
         }
@@ -93,7 +93,7 @@ namespace EpohUI.Core
             }
         }
 
-        private static void LoadMethod()
+        private static void LoadType()
         {
             foreach (var assembly in _assemblyCache.Values)
             {
