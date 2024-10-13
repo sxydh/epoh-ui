@@ -60,13 +60,21 @@ namespace EpohUI.Core
                 invokeParams += reader.ReadToEnd();
             }
 
-            MethodHelper.GetMethodId(apiUri, out var methodId);
-            var result = MethodHelper.Invoke(methodId, invokeParams);
             using (StreamWriter streamWriter = new StreamWriter(response.OutputStream))
             {
-                streamWriter.WriteLine(result.ToString());
-                response.ContentType = "text/plain; charset=UTF-8";
-                response.StatusCode = 200;
+                MethodHelper.GetMethodId(apiUri, out var methodId);
+
+                if (methodId != null)
+                {
+                    var result = MethodHelper.Invoke(methodId, invokeParams);
+                    streamWriter.WriteLine(result.ToString());
+                    response.ContentType = "text/plain; charset=UTF-8";
+                    response.StatusCode = 200;
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.BadRequest;
+                }
             }
             response.Close();
             return true;
