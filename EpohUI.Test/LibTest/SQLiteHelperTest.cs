@@ -19,7 +19,7 @@ namespace EpohUI.Test.LibTest
                 ["args"] = new object[] { 1, "1", null },
                 ["file"] = $"{typeof(SQLiteHelperTest).FullName}.sqlite"
             };
-            var ret = SQLiteHelper.Select(JsonConvert.SerializeObject(req));
+            var ret = SQLiteHelper.Execute(JsonConvert.SerializeObject(req));
             Assert.IsNotNull(ret);
         }
 
