@@ -134,7 +134,9 @@ namespace EpohUI.Core
 
         private static void LoadAssembly()
         {
-            var dlls = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "DLLs"), "*.dll");
+            var dllPath = Directory.GetCurrentDirectory();
+            Directory.CreateDirectory(dllPath);
+            var dlls = Directory.GetFiles(Path.Combine(dllPath, "DLLs"), "*.dll");
             foreach (var dll in dlls)
             {
                 try
