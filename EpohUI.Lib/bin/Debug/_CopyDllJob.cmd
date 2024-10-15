@@ -3,14 +3,14 @@ setlocal enabledelayedexpansion
 
 :: 设置监控的文件夹
 set "watchFolder=%cd%"
-set "targetFolder=%cd%\..\..\..\EpohUI.Core\bin\Debug"
+set "targetFolder=%cd%\..\..\..\EpohUI.Core\bin\Debug\DLLs"
 
 :: 创建一个初始的文件列表
 dir /b "%watchFolder%\*.dll" > _FileList.txt
 
 :loop
 :: 等待文件变化
-timeout /t 1 > nul
+timeout /t 2 > nul
 
 :: 生成新的文件列表
 dir /b "%watchFolder%\*.dll" > _NewFileList.txt
