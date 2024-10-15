@@ -14,7 +14,7 @@ namespace EpohUI.Core
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
             var pidPath = Path.Combine(Directory.GetCurrentDirectory(), ".pid");
             var pid = File.Exists(pidPath) ? File.ReadAllText(pidPath) : null;
