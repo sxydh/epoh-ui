@@ -5,7 +5,7 @@ namespace EpohUI.Lib
     public class Program
     {
 
-        public static void Kill()
+        public static void Kill(string _)
         {
             try
             {
