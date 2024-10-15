@@ -19,7 +19,7 @@ namespace EpohUI.Lib
         {
             var ret = "";
             ret += $"lib/file-read={typeof(FileHelper).FullName}#Read";
-            ret += $"lib/file-read_stream={typeof(FileHelper).FullName}#ReadStream";
+            ret += $"\r\nlib/file-read_stream={typeof(FileHelper).FullName}#ReadStream";
             return ret;
         }
 
