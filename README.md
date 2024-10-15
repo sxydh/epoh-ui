@@ -1,47 +1,51 @@
-# EpohUI 是什么
+# What is EpohUI
 
-EpohUI 是 C# 实现的跨平台框架，目的是整合浏览器和系统接口的能力。
+EpohUI is a cross-platform framework implemented in C#, designed to integrate the capabilities of browsers and system interfaces.
 
-## EpohUI 能做什么
+## What Can EpohUI Do
 
-* 作为轻量的 HTTP 服务器  
-  EpohUI 首先是一个极简的 HTTP 服务器，这可以让你浏览应用的目录和文件。  
-  这意味着你可以直接在应用内部署 Web 应用，例如 Vue 、 React 、 Angular 等，当然你也可以直接写一个原生的 HTML 文件。  
-* 调用系统接口  
-  EpohUI 允许你通过 HTTP 协议调用系统接口，例如 IO 、 Net 、 Database 、 Thread 、 Process 等。  
-* 调用自定义接口  
-  EpohUI 除了可以调用系统接口，还可以动态调用用户定义的接口，而不需要编译或者打包整个应用。  
+* Lightweight HTTP Server  
+  EpohUI is primarily a minimal HTTP server, allowing you to browse the application’s directories and files.  
+  This means you can directly deploy web applications within the app, such as Vue, React, Angular, or even just write a native HTML file.  
+  
+* Call System Interfaces  
+  EpohUI allows you to call system interfaces via HTTP protocol, such as IO, Net, Database, Thread, Process, etc.  
+  
+* Call Custom Interfaces  
+  In addition to calling system interfaces, EpohUI can dynamically invoke user-defined interfaces without the need to compile or package the entire application.  
 
-## EpohUI 如何使用  
+## How to Use EpohUI  
 
-EpohUI 使用非常简单，只需要一步：  
+Using EpohUI is very simple, just one step:  
 
-* 将 EpohUI.Core.exe 放到带有 index.html 的文件夹内，运行 EpohUI.Core.exe 即可进入应用首页。  
+* Place EpohUI.Core.exe in the folder containing index.html, and run EpohUI.Core.exe to access the application homepage.  
 
-如果需要调用系统接口，也非常容易：  
+If you need to call system interfaces, it's also very easy:  
 
 ```JavaScript
-// 路径中的 lib/hello-world 是系统接口的唯一标识
+// The path lib/hello-world is the unique identifier for the system interface
 fetch("http://localhost:33/api/lib/hello-world")
   .then(res => res.text())
   .then(data => {
-    // 这里可以得到系统接口的返回值
+    // Here you can get the return value of the system interface
     console.log(data);
   });
 ```
 
-如果需要调用自定义接口，只需要两步：  
+If you need to call custom interfaces, just follow these two steps:  
 
-* 复制用户 DLL 文件到 DLLs 文件夹内
-* 通过 HTTP 调用
+* Copy your user DLL files into the DLLs folder.
+* Call via HTTP.
 
-## EpohUI 现在和将来具备的能力
+## Current and Future Capabilities of EpohUI
 
-* \[TODO\] 文件操作
-* \[TODO\] 数据库操作
-* \[TODO\] 进程操作
-* \[TODO\] 多线程任务
-* \[TODO\] 安全
-* \[TODO\] 跨平台
+* \[TODO\] File Operations
+* \[TODO\] Database Operations
+* \[TODO\] Process Operations
+* \[TODO\] Multithreading Tasks
+* \[TODO\] Security
+* \[TODO\] Cross-Platform
 
-## EpohUI 架构
+## EpohUI Architecture
+
+TODO
