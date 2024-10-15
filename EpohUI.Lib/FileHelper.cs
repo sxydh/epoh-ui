@@ -17,7 +17,10 @@ namespace EpohUI.Lib
 
         public static string GetMethodIdMap()
         {
-            return $"lib/file-read={typeof(FileHelper).FullName}#Read";
+            var ret = "";
+            ret += $"lib/file-read={typeof(FileHelper).FullName}#Read";
+            ret += $"lib/file-read_stream={typeof(FileHelper).FullName}#ReadStream";
+            return ret;
         }
 
     }
