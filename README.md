@@ -6,7 +6,7 @@ EpohUI 是 C# 实现的跨平台框架，目的是整合浏览器和系统接口
 
 * 作为轻量的 HTTP 服务器  
   EpohUI 首先是一个极简的 HTTP 服务器，这可以让你浏览应用的目录和文件。  
-  这意味着你可以直接在应用内部署 Web 应用，例如 Vue 、 React 、 Angular 等，当让你也可以直接写一个原生的 HTML 文件。  
+  这意味着你可以直接在应用内部署 Web 应用，例如 Vue 、 React 、 Angular 等，当然你也可以直接写一个原生的 HTML 文件。  
 * 调用系统接口  
   EpohUI 允许你通过 HTTP 协议调用系统接口，例如 IO 、 Net 、 Database 、 Thread 、 Process 等。  
 * 调用自定义接口  
