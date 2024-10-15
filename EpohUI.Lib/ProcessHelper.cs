@@ -2,7 +2,7 @@
 
 namespace EpohUI.Lib
 {
-    public class Program
+    public class ProcessHelper
     {
 
         public static void Kill(string _)
@@ -16,7 +16,7 @@ namespace EpohUI.Lib
 
         public static string GetMethodIdMap()
         {
-            return $"lib/program-kill={typeof(Program).FullName}#Kill";
+            return $"lib/program-kill={typeof(ProcessHelper).FullName}#Kill";
         }
 
     }
