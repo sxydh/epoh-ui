@@ -139,13 +139,14 @@ namespace EpohUI.Core
             {
                 try
                 {
+                    if (_assemblyCache.ContainsKey(dll))
+                    {
+                        continue;
+                    }
                     var assembly = Assembly.LoadFrom(dll);
                     _assemblyCache[dll] = assembly;
                 }
-                catch
-                {
-
-                }
+                catch { }
             }
         }
 
@@ -156,6 +157,10 @@ namespace EpohUI.Core
                 Type[] types = assembly.GetTypes();
                 foreach (Type type in types)
                 {
+                    if (_typeCache.ContainsKey(type.FullName))
+                    {
+                        continue;
+                    }
                     _typeCache[type.FullName] = type;
                 }
             }
@@ -183,7 +188,12 @@ namespace EpohUI.Core
                         continue;
                     }
                     var kv = line.Split('=');
-                    _methodIdMap[kv[0].Trim()] = kv[1].Trim();
+                    var k = kv[0].Trim();
+                    if (_methodIdMap.ContainsKey(k))
+                    {
+                        continue;
+                    }
+                    _methodIdMap[k] = kv[1].Trim();
                 }
             }
         }
