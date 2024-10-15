@@ -83,30 +83,39 @@ namespace EpohUI.Core
                 invokeParams += reader.ReadToEnd();
             }
 
-            using (StreamWriter streamWriter = new StreamWriter(response.OutputStream))
+            using (var streamWriter = new StreamWriter(response.OutputStream, request.ContentEncoding))
             {
                 MethodHelper.GetMethodId(apiUri, out var methodId);
-
                 if (methodId != null)
                 {
-                    object result;
                     try
                     {
-                        result = MethodHelper.Invoke(methodId, invokeParams);
+                        var result = MethodHelper.Invoke(methodId, invokeParams);
+                        if (result is Stream resultStream)
+                        {
+                            response.StatusCode = 200;
+                            response.ContentType = "application/octet-stream";
+                            resultStream.CopyTo(response.OutputStream);
+                        }
+                        else
+                        {
+                            response.StatusCode = 200;
+                            response.ContentType = "text/plain; charset=UTF-8";
+                            streamWriter.WriteLine(result);
+                        }
                     }
                     catch (Exception ex)
                     {
-                        result = ex.ToString();
+                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        streamWriter.WriteLine(ex.ToString());
                     }
-                    streamWriter.WriteLine(result);
-                    response.ContentType = "text/plain; charset=UTF-8";
-                    response.StatusCode = 200;
                 }
                 else
                 {
                     response.StatusCode = (int)HttpStatusCode.BadRequest;
                 }
             }
+
             response.Close();
             return true;
         }
