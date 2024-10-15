@@ -111,6 +111,41 @@ namespace EpohUI.Core
             return true;
         }
 
+        public override void ProcessFile(HttpListenerContext context, string filePath)
+        {
+            var uri = context.Request.Url.AbsolutePath.Trim('/');
+            if (string.IsNullOrEmpty(uri))
+            {
+                try
+                {
+                    context.Response.ContentType = GetContentType(filePath);
+
+                    var html = File.ReadAllText(filePath);
+                    var script = "";
+                    var scriptPath = Path.Combine(Directory.GetCurrentDirectory(), ".injected.js");
+                    if (File.Exists(scriptPath))
+                    {
+                        script = File.ReadAllText(scriptPath);
+                    }
+                    using (var writer = new StreamWriter(context.Response.OutputStream))
+                    {
+                        writer.Write(html + script);
+                    }
+
+                    context.Response.StatusCode = 200;
+                }
+                catch (Exception)
+                {
+                    context.Response.StatusCode = 500;
+                }
+                finally
+                {
+                    context.Response.Close();
+                }
+            }
+            base.ProcessFile(context, filePath);
+        }
+
     }
 
     public class MethodHelper
