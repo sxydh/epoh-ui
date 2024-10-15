@@ -41,5 +41,7 @@ fetch("http://localhost:33/api/lib/hello-world")
 * \[TODO\] 数据库操作
 * \[TODO\] 进程操作
 * \[TODO\] 多线程任务
+* \[TODO\] 安全
+* \[TODO\] 跨平台
 
 ## EpohUI 架构
