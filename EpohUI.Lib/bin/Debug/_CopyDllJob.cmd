@@ -1,4 +1,5 @@
 @echo off
+chcp 65001
 setlocal enabledelayedexpansion
 
 :: 设置监控的文件夹
@@ -18,14 +19,14 @@ dir /b "%watchFolder%\*.dll" > _NewFileList.txt
 :: 比较当前文件和新的文件列表
 fc /b _FileList.txt _NewFileList.txt > nul
 if errorlevel 1 (
-    echo 文件夹发生变化，清空 target 文件夹并复制 DLL 文件。
+    echo "文件夹发生变化，清空 target 文件夹并复制 DLL 文件。"
 
     :: 清空 target 文件夹
-    echo 正在清空 %targetFolder%
+    echo "正在清空 %targetFolder%"
     del "%targetFolder%\*.dll"
 
     :: 复制 DLL 文件到 target 文件夹
-    echo 正在复制 DLL 文件到 %targetFolder%
+    echo "正在复制 DLL 文件到 %targetFolder%"
     copy "%watchFolder%\*.dll" "%targetFolder%\"
 
     :: 更新当前文件列表
