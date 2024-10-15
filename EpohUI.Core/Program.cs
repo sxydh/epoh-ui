@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
@@ -14,9 +15,25 @@ namespace EpohUI.Core
     {
         static void Main(string[] args)
         {
+            var pidPath = Path.Combine(Directory.GetCurrentDirectory(), ".pid");
+            var pid = File.Exists(pidPath) ? File.ReadAllText(pidPath) : null;
+            if (!string.IsNullOrEmpty(pid))
+            {
+                try
+                {
+                    var process = Process.GetProcessById(int.Parse(pid));
+                    if (process != null && !process.HasExited)
+                    {
+                        process.Kill();
+                    }
+                }
+                catch { }
+            }
+
             int port = 8080;
 
             AllServer fileServer = new AllServer(port);
+            File.WriteAllText(pidPath, Process.GetCurrentProcess().Id.ToString());
             fileServer.Start().Wait();
         }
     }
