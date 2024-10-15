@@ -16,7 +16,7 @@ EpohUI 是 C# 实现的跨平台框架，目的是整合浏览器和系统接口
 
 EpohUI 使用非常简单，只需要一步：  
 
-* 将 EpohUI.Core.exe 放到带有入口文件 index.html 的文件夹内，运行 EpohUI.Core.exe 即可进入应用首页。  
+* 将 EpohUI.Core.exe 放到带有 index.html 的文件夹内，运行 EpohUI.Core.exe 即可进入应用首页。  
 
 如果需要调用系统接口，也非常容易：  
 
