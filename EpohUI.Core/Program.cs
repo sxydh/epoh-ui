@@ -34,7 +34,6 @@ namespace EpohUI.Core
             int port = 8080;
 
             AllServer fileServer = new AllServer(port);
-            File.WriteAllText(pidPath, Process.GetCurrentProcess().Id.ToString());
             var task = Task.Run(async () =>
             {
                 await fileServer.Start();
@@ -43,6 +42,7 @@ namespace EpohUI.Core
             {
                 Process.Start($"http://localhost:{port}");
             }
+            File.WriteAllText(pidPath, Process.GetCurrentProcess().Id.ToString());
             task.Wait();
         }
     }
