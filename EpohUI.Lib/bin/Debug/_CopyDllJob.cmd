@@ -7,14 +7,14 @@ set "watchFolder=%cd%"
 set "targetFolder=%cd%\..\..\..\EpohUI.Core\bin\Debug\DLLs"
 
 :: 创建一个初始的文件列表
-dir /b "%watchFolder%\*.dll" > _FileList.txt
+dir /b "%watchFolder%\*.dll" > _FileList.txt 2> nul
 
 :loop
 :: 等待文件变化
 timeout /t 2 > nul
 
 :: 生成新的文件列表
-dir /b "%watchFolder%\*.dll" > _NewFileList.txt
+dir /b "%watchFolder%\*.dll" > _NewFileList.txt 2> nul
 
 :: 比较当前文件和新的文件列表
 fc /b _FileList.txt _NewFileList.txt > nul
