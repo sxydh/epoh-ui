@@ -38,10 +38,7 @@ namespace EpohUI.Core
             {
                 await fileServer.Start();
             });
-            if (!Debugger.IsAttached)
-            {
-                Process.Start($"http://localhost:{port}");
-            }
+            Process.Start($"http://localhost:{port}");
             File.WriteAllText(pidPath, Process.GetCurrentProcess().Id.ToString());
             task.Wait();
         }
