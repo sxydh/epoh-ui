@@ -1,4 +1,4 @@
-# What is EpohUI
+# What is EpohUI [\[中文\]](./README.chs.md)
 
 EpohUI is a cross-platform framework implemented in C#, designed to integrate the capabilities of browsers and system interfaces.
 
