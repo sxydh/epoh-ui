@@ -31,7 +31,7 @@ namespace EpohUI.Core
                 catch { }
             }
 
-            int port = 8080;
+            int port = 33;
 
             AllServer fileServer = new AllServer(port);
             var task = Task.Run(async () =>
