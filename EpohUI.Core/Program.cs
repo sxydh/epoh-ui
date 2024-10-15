@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace EpohUI.Core
@@ -34,7 +35,15 @@ namespace EpohUI.Core
 
             AllServer fileServer = new AllServer(port);
             File.WriteAllText(pidPath, Process.GetCurrentProcess().Id.ToString());
-            fileServer.Start().Wait();
+            var task = Task.Run(async () =>
+            {
+                await fileServer.Start();
+            });
+            if (!Debugger.IsAttached)
+            {
+                Process.Start($"http://localhost:{port}");
+            }
+            task.Wait();
         }
     }
 
