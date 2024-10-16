@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace EpohUI.Lib
 {
@@ -8,39 +8,32 @@ namespace EpohUI.Lib
     {
         public static string Read(string reqBody)
         {
-            return File.ReadAllText(reqBody);
+            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            return File.ReadAllText(req.File);
         }
 
         public static Stream ReadStream(string reqBody)
         {
-            return new FileStream(reqBody, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096);
+            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            return new FileStream(req.File, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096);
         }
 
         public static void Write(string reqBody)
         {
-            var reqJon = JObject.Parse(reqBody);
-            var file = reqJon["file"]?.ToString() ?? throw new ArgumentException("Args file cannot be null");
-            var text = reqJon["text"]?.ToString() ?? throw new ArgumentException("Args text cannot be null");
-            var isAbsolute = reqJon["isAbsolute"]?.ToString() ?? "0";
-            File.WriteAllText(
-                isAbsolute == "1" ? file : Path.Combine(Directory.GetCurrentDirectory(), file),
-                text);
+            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            File.WriteAllText(req.File, req.Text);
         }
 
         public static void Delete(string reqBody)
         {
-            var reqJon = JObject.Parse(reqBody);
-            var file = reqJon["file"]?.ToString() ?? throw new ArgumentException("Args file cannot be null");
-            var isAbsolute = reqJon["isAbsolute"]?.ToString() ?? "0";
-            File.Delete(isAbsolute == "1" ? file : Path.Combine(Directory.GetCurrentDirectory(), file));
+            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            File.Delete(req.File);
         }
 
         public static string Exists(string reqBody)
         {
-            var reqJon = JObject.Parse(reqBody);
-            var file = reqJon["file"]?.ToString() ?? throw new ArgumentException("Args file cannot be null");
-            var isAbsolute = reqJon["isAbsolute"]?.ToString() ?? "0";
-            return File.Exists(isAbsolute == "1" ? file : Path.Combine(Directory.GetCurrentDirectory(), file)) ? "1" : "0";
+            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            return File.Exists(req.File) ? "1" : "0";
         }
 
         public static string GetMethodIdMap()
@@ -52,6 +45,34 @@ namespace EpohUI.Lib
             ret += $"\r\nlib/file-delete={typeof(FileHelper).FullName}#Delete";
             ret += $"\r\nlib/file-exists={typeof(FileHelper).FullName}#Exists";
             return ret;
+        }
+    }
+
+    internal class Req
+    {
+        private string _file;
+        private string _isAbsolute;
+
+        public string File
+        {
+            get => IsAbsolute == "1" ? _file : Path.Combine(Directory.GetCurrentDirectory(), _file);
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentException("File cannot be null or empty");
+                }
+
+                _file = value;
+            }
+        }
+
+        public string Text { get; set; }
+
+        public string IsAbsolute
+        {
+            get => string.IsNullOrEmpty(_isAbsolute) ? "0" : _isAbsolute;
+            set => _isAbsolute = value;
         }
     }
 }
