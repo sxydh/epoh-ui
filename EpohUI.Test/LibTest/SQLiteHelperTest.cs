@@ -8,7 +8,7 @@ namespace EpohUI.Test.LibTest
     public class SQLiteHelperTest
     {
         [TestMethod]
-        public void SelectTest()
+        public void TestSelect()
         {
             var req = new SQLiteReq
             {
