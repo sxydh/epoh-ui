@@ -16,13 +16,28 @@ namespace EpohUI.Test.LibTest
         {
             var dict = new Dictionary<string, string>
             {
-                ["file"] = Path.Combine(Directory.GetCurrentDirectory(), $"{typeof(FileHelperTest).FullName}.TestWrite"),
+                ["file"] = $"{typeof(FileHelperTest).FullName}.TestWrite",
                 ["text"] = DateTime.Now.ToString(CultureInfo.InvariantCulture)
             };
             FileHelper.Write(JsonConvert.SerializeObject(dict));
-            Assert.IsTrue(File.Exists(dict["file"]));
-            File.Delete(dict["file"]);
-            Assert.IsTrue(!File.Exists(dict["file"]));
+
+            var file = Path.Combine(Directory.GetCurrentDirectory(), dict["file"]);
+            Assert.IsTrue(File.Exists(file));
+            File.Delete(file);
+            Assert.IsTrue(!File.Exists(file));
+
+            dict = new Dictionary<string, string>
+            {
+                ["file"] = $"{typeof(FileHelperTest).FullName}.TestWrite",
+                ["text"] = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                ["isAbsolute"] = "1"
+            };
+            FileHelper.Write(JsonConvert.SerializeObject(dict));
+
+            file = dict["file"];
+            Assert.IsTrue(File.Exists(file));
+            File.Delete(file);
+            Assert.IsTrue(!File.Exists(file));
         }
     }
 }
