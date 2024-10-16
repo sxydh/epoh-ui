@@ -5,6 +5,7 @@ setlocal enabledelayedexpansion
 set "watchFolder=%cd%"
 set "targetFolder=%cd%\..\..\..\EpohUI.Core\bin\Debug\DLLs"
 
+mkdir %targetFolder%
 pushd "%targetFolder%"
 set "targetFolder=%cd%"
 popd
@@ -19,6 +20,7 @@ dir /b "%watchFolder%\*.dll" > _NewFileList.txt 2> nul
 fc /b _FileList.txt _NewFileList.txt > nul
 if errorlevel 1 (
     echo "正在清空 %targetFolder%"
+    mkdir %targetFolder%
     del "%targetFolder%\*.dll" 2> nul
 
     echo "正在复制 %watchFolder%"
