@@ -15,7 +15,7 @@ namespace EpohUI.Test.LibTest
         [TestMethod]
         public void TestRead()
         {
-            var req = new Req
+            var req = new FileReq
             {
                 File = Path.Combine(Directory.GetCurrentDirectory(), $"{typeof(FileHelperTest).FullName}.TestRead"),
                 Text = "1"
