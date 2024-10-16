@@ -35,6 +35,14 @@ namespace EpohUI.Lib
             File.Delete(isAbsolute == "1" ? file : Path.Combine(Directory.GetCurrentDirectory(), file));
         }
 
+        public static string Exists(string reqBody)
+        {
+            var reqJon = JObject.Parse(reqBody);
+            var file = reqJon["file"]?.ToString() ?? throw new ArgumentException("Args file cannot be null");
+            var isAbsolute = reqJon["isAbsolute"]?.ToString() ?? "0";
+            return File.Exists(isAbsolute == "1" ? file : Path.Combine(Directory.GetCurrentDirectory(), file)) ? "1" : "0";
+        }
+
         public static string GetMethodIdMap()
         {
             var ret = "";
@@ -42,6 +50,7 @@ namespace EpohUI.Lib
             ret += $"\r\nlib/file-read_stream={typeof(FileHelper).FullName}#ReadStream";
             ret += $"\r\nlib/file-write={typeof(FileHelper).FullName}#Write";
             ret += $"\r\nlib/file-delete={typeof(FileHelper).FullName}#Delete";
+            ret += $"\r\nlib/file-exists={typeof(FileHelper).FullName}#Exists";
             return ret;
         }
     }
