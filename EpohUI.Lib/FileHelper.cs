@@ -48,7 +48,7 @@ namespace EpohUI.Lib
         }
     }
 
-    public class Req
+    public partial class Req
     {
         private string _file;
         private string _isAbsolute;
