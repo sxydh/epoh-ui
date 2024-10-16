@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using EpohUI.Lib;
@@ -11,7 +10,6 @@ namespace EpohUI.Test.LibTest
     [TestClass]
     public class FileHelperTest
     {
-
         [TestMethod]
         public void TestRead()
         {
@@ -21,42 +19,42 @@ namespace EpohUI.Test.LibTest
                 Text = "1"
             };
             var reqStr = JsonConvert.SerializeObject(req);
-            
+
             File.WriteAllText(req.File, req.Text);
             var read = FileHelper.Read(reqStr);
             Assert.IsTrue(read == "1");
             File.Delete(req.File);
             Assert.ThrowsException<FileNotFoundException>(() => FileHelper.Read(reqStr));
         }
-        
-        
+
         [TestMethod]
         public void TestWrite()
         {
-            var dict = new Dictionary<string, string>
+            /* 相对路径 */
+            var req = new FileReq
             {
-                ["file"] = $"{typeof(FileHelperTest).FullName}.TestWrite",
-                ["text"] = DateTime.Now.ToString(CultureInfo.InvariantCulture)
+                File = $"{typeof(FileHelperTest).FullName}.TestWrite",
+                Text = DateTime.Now.ToString(CultureInfo.InvariantCulture)
             };
-            FileHelper.Write(JsonConvert.SerializeObject(dict));
+            FileHelper.Write(JsonConvert.SerializeObject(req));
 
-            var file = Path.Combine(Directory.GetCurrentDirectory(), dict["file"]);
+            var file = Path.Combine(Directory.GetCurrentDirectory(), req.File);
             Assert.IsTrue(File.Exists(file));
             File.Delete(file);
             Assert.IsTrue(!File.Exists(file));
 
-            dict = new Dictionary<string, string>
+            /* 绝对路径 */
+            req = new FileReq
             {
-                ["file"] = $"{typeof(FileHelperTest).FullName}.TestWrite",
-                ["text"] = DateTime.Now.ToString(CultureInfo.InvariantCulture),
-                ["isAbsolute"] = "1"
+                File = $"{typeof(FileHelperTest).FullName}.TestWrite",
+                Text = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                IsAbsolute = "1"
             };
-            FileHelper.Write(JsonConvert.SerializeObject(dict));
+            FileHelper.Write(JsonConvert.SerializeObject(req));
 
-            file = dict["file"];
-            Assert.IsTrue(File.Exists(file));
-            File.Delete(file);
-            Assert.IsTrue(!File.Exists(file));
+            Assert.IsTrue(File.Exists(req.File));
+            File.Delete(req.File);
+            Assert.IsTrue(!File.Exists(req.File));
         }
     }
 }
