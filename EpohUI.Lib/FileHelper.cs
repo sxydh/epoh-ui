@@ -27,12 +27,18 @@ namespace EpohUI.Lib
                 text);
         }
 
+        public static void Delete(string reqBody)
+        {
+            File.Delete(reqBody);
+        }
+
         public static string GetMethodIdMap()
         {
             var ret = "";
             ret += $"lib/file-read={typeof(FileHelper).FullName}#Read";
             ret += $"\r\nlib/file-read_stream={typeof(FileHelper).FullName}#ReadStream";
             ret += $"\r\nlib/file-write={typeof(FileHelper).FullName}#Write";
+            ret += $"\r\nlib/file-delete={typeof(FileHelper).FullName}#Delete";
             return ret;
         }
     }
