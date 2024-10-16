@@ -8,31 +8,31 @@ namespace EpohUI.Lib
     {
         public static string Read(string reqBody)
         {
-            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            var req = JsonConvert.DeserializeObject<FileReq>(reqBody);
             return File.ReadAllText(req.File);
         }
 
         public static Stream ReadStream(string reqBody)
         {
-            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            var req = JsonConvert.DeserializeObject<FileReq>(reqBody);
             return new FileStream(req.File, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096);
         }
 
         public static void Write(string reqBody)
         {
-            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            var req = JsonConvert.DeserializeObject<FileReq>(reqBody);
             File.WriteAllText(req.File, req.Text);
         }
 
         public static void Delete(string reqBody)
         {
-            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            var req = JsonConvert.DeserializeObject<FileReq>(reqBody);
             File.Delete(req.File);
         }
 
         public static string Exists(string reqBody)
         {
-            var req = JsonConvert.DeserializeObject<Req>(reqBody);
+            var req = JsonConvert.DeserializeObject<FileReq>(reqBody);
             return File.Exists(req.File) ? "1" : "0";
         }
 
@@ -48,7 +48,7 @@ namespace EpohUI.Lib
         }
     }
 
-    public partial class Req
+    public class FileReq
     {
         private string _file;
         private string _isAbsolute;
