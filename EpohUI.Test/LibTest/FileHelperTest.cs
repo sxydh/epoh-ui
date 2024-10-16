@@ -56,5 +56,37 @@ namespace EpohUI.Test.LibTest
             File.Delete(req.File);
             Assert.IsTrue(!File.Exists(req.File));
         }
+
+        [TestMethod]
+        public void TestDelete()
+        {
+            var req = new FileReq
+            {
+                File = $"{typeof(FileHelperTest).FullName}.TestDelete",
+                Text = DateTime.Now.ToString(CultureInfo.InvariantCulture)
+            };
+            File.WriteAllText(req.File, req.Text);
+            Assert.IsTrue(File.Exists(req.File));
+            
+            FileHelper.Delete(JsonConvert.SerializeObject(req));
+            Assert.IsTrue(!File.Exists(req.File));
+        }
+        
+        [TestMethod]
+        public void TestExists()
+        {
+            var req = new FileReq
+            {
+                File = $"{typeof(FileHelperTest).FullName}.TestExists",
+                Text = DateTime.Now.ToString(CultureInfo.InvariantCulture)
+            };
+            File.WriteAllText(req.File, req.Text);
+            Assert.IsTrue(File.Exists(req.File));
+            
+            var exists = FileHelper.Exists(JsonConvert.SerializeObject(req));
+            Assert.IsTrue(exists == "1");
+            File.Delete(req.File);
+            Assert.IsTrue(!File.Exists(req.File));
+        }
     }
 }
