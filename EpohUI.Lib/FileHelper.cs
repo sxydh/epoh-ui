@@ -29,7 +29,10 @@ namespace EpohUI.Lib
 
         public static void Delete(string reqBody)
         {
-            File.Delete(reqBody);
+            var reqJon = JObject.Parse(reqBody);
+            var file = reqJon["file"]?.ToString() ?? throw new ArgumentException("Args file cannot be null");
+            var isAbsolute = reqJon["isAbsolute"]?.ToString() ?? "0";
+            File.Delete(isAbsolute == "1" ? file : Path.Combine(Directory.GetCurrentDirectory(), file));
         }
 
         public static string GetMethodIdMap()
