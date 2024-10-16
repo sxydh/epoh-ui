@@ -19,9 +19,12 @@ namespace EpohUI.Lib
         public static void Write(string reqBody)
         {
             var reqJon = JObject.Parse(reqBody);
-            var file = reqJon["file"] ?? throw new ArgumentException("Args file cannot be null");
-            var text = reqJon["text"] ?? throw new ArgumentException("Args text cannot be null");
-            File.WriteAllText(file.ToString(), text.ToString());
+            var file = reqJon["file"]?.ToString() ?? throw new ArgumentException("Args file cannot be null");
+            var text = reqJon["text"]?.ToString() ?? throw new ArgumentException("Args text cannot be null");
+            var isAbsolute = reqJon["isAbsolute"]?.ToString() ?? "0";
+            File.WriteAllText(
+                isAbsolute == "1" ? file : Path.Combine(Directory.GetCurrentDirectory(), file),
+                text);
         }
 
         public static string GetMethodIdMap()
