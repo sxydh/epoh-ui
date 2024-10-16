@@ -11,6 +11,25 @@ namespace EpohUI.Test.LibTest
     [TestClass]
     public class FileHelperTest
     {
+
+        [TestMethod]
+        public void TestRead()
+        {
+            var req = new Req
+            {
+                File = Path.Combine(Directory.GetCurrentDirectory(), $"{typeof(FileHelperTest).FullName}.TestRead"),
+                Text = "1"
+            };
+            var reqStr = JsonConvert.SerializeObject(req);
+            
+            File.WriteAllText(req.File, req.Text);
+            var read = FileHelper.Read(reqStr);
+            Assert.IsTrue(read == "1");
+            File.Delete(req.File);
+            Assert.ThrowsException<FileNotFoundException>(() => FileHelper.Read(reqStr));
+        }
+        
+        
         [TestMethod]
         public void TestWrite()
         {
