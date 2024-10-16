@@ -4,11 +4,17 @@ using System.IO;
 using Microsoft.Data.Sqlite;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SQLitePCL;
 
 namespace EpohUI.Lib
 {
     public class SQLiteHelper
     {
+        static SQLiteHelper()
+        {
+            Batteries.Init();
+        }
+
         public static string Execute(string reqBody)
         {
             var req = JsonConvert.DeserializeObject<SQLiteReq>(reqBody);
