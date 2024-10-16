@@ -60,7 +60,7 @@ namespace EpohUI.Lib
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException("File cannot be null or empty");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 _file = value;
