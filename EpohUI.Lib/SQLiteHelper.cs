@@ -77,7 +77,7 @@ namespace EpohUI.Lib
             }
         }
 
-        public string Args { get; set; }
+        public object Args { get; set; }
 
         public string File
         {
